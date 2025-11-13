@@ -15,6 +15,9 @@ import { OptionsMenu } from "./OptionsMenu";
 import { SecureInfo } from "./SecureInfo";
 import { ZoomControl } from "./ZoomControl";
 import useGraph from "./stores/useGraph";
+import EditableNode from "../../../../components/graph/EditableNode";
+
+
 
 const StyledEditorWrapper = styled.div<{ $widget: boolean; $showRulers: boolean }>`
   width: 100%;
@@ -111,10 +114,10 @@ const GraphCanvas = ({ isWidget }: GraphProps) => {
 
   return (
     <Canvas
-      className="jsoncrack-canvas"
+      className="jsoncrack--canvas"
       onLayoutChange={onLayoutChange}
-      node={p => <CustomNode {...p} />}
-      edge={p => <CustomEdge {...p} />}
+      node={(p) => <EditableNode {...p} />}
+      edge={(p) => <CustomEdge {...p} />}
       nodes={nodes}
       edges={edges}
       arrow={null}
@@ -124,7 +127,7 @@ const GraphCanvas = ({ isWidget }: GraphProps) => {
       width={paneWidth}
       direction={direction}
       layoutOptions={layoutOptions}
-      key={[direction, colorScheme].join("-")}
+      key={[direction, colorScheme].join("_")}
       pannable={false}
       zoomable={false}
       animated={false}
@@ -134,7 +137,10 @@ const GraphCanvas = ({ isWidget }: GraphProps) => {
       fit={true}
     />
   );
-};
+};  
+
+
+
 
 export const GraphView = ({ isWidget = false }: GraphProps) => {
   const setViewPort = useGraph(state => state.setViewPort);
